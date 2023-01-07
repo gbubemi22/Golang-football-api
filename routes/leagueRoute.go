@@ -6,6 +6,9 @@ import(
 ) 
 
 func LeagueRoutes(incomingRoutes *gin.Engine){
-	incomingRoutes.POST("/api/leagues", controller.Creatleague())
-	incomingRoutes.GET("/api/leagues/league_id", controller.GetLeague())
+	incomingRoutes.POST("/leagues", controller.CreateLeague())
+	incomingRoutes.GET("/leagues/:league_id", controller.GetLeague())
+	incomingRoutes.GET("/leagues/", controller.GetLeagues())
+	incomingRoutes.PUT("/leagues/:league_id", controller.UpdateFood())
 }
+       

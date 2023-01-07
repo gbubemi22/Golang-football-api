@@ -1,35 +1,30 @@
 package main
 
 import (
-	"github.com/gbubemi22/golang-football-api/initializers"
-	"github.com/gin-gonic/gin"
+	"os"
+
+	"github.com/gbubemi22/golang-football-api/database"
 	routes "github.com/gbubemi22/golang-football-api/routes"
+	"github.com/gin-gonic/gin"
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
-func init() {
-	initializers.LoadEnvVariables()
-	initializers.ConnectToDB()
-}
-
-
-
-
+var leagueCollection *mongo.Collection = database.OpenCollection(database.Client, "league")
 
 func main() {
 
+	port := os.Getenv("PORT")
+
+	if port == "" {
+		port = "5003"
+	}
 
 	router := gin.New()
-router.Use(gin.Logger())
-//routes.UserRoutes(router)
+	router.Use(gin.Logger())
+	//routes.UserRoutes(router)
 
-routes.LeagueRoutes(router)
-	// r := gin.Default()
-	router.GET("/", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "this API IS LIVE",
-		})
-	})
-	
-	 
-	router.Run() // listen and serve on 0.0.0.0:8080
+	routes.LeagueRoutes(router)
+	routes.TeamRoutes(router)
+
+	router.Run(":" + port)
 }
