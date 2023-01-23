@@ -107,7 +107,7 @@ func CreateLeague() gin.HandlerFunc {
 
 
 
-func UpdateFood() gin.HandlerFunc {
+func UpdateLeague() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 		

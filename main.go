@@ -25,6 +25,8 @@ func main() {
 
 	routes.LeagueRoutes(router)
 	routes.TeamRoutes(router)
+	routes.PlayerRoutes(router)
+
 
 	router.Run(":" + port)
 }

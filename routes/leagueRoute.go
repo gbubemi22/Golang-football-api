@@ -9,6 +9,6 @@ func LeagueRoutes(incomingRoutes *gin.Engine){
 	incomingRoutes.POST("/leagues", controller.CreateLeague())
 	incomingRoutes.GET("/leagues/:league_id", controller.GetLeague())
 	incomingRoutes.GET("/leagues/", controller.GetLeagues())
-	incomingRoutes.PUT("/leagues/:league_id", controller.UpdateFood())
+	incomingRoutes.PUT("/leagues/:league_id", controller.UpdateLeague())
 }
        
