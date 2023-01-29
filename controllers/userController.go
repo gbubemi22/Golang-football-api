@@ -26,6 +26,12 @@ var userCollection *mongo.Collection = database.OpenCollection(database.Client, 
 
 func GetUsers() gin.HandlerFunc {
 	return func(c *gin.Context) {
+
+		if err := helper.CheckUserType(c, "ADMIN"); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+
 		var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 
 		recordPerPage, err := strconv.Atoi(c.Query("recordPerPage"))
@@ -72,6 +78,12 @@ func GetUser() gin.HandlerFunc {
 		var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 		userId := c.Param("user_id")
 
+
+		if err := helper.MatchUserTypeToUid(c, userId); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+		
 		var user models.User
 
 		err := userCollection.FindOne(ctx, bson.M{"user_id": userId}).Decode(&user)
