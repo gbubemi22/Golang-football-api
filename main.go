@@ -7,6 +7,7 @@ import (
 	routes "github.com/gbubemi22/golang-football-api/routes"
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/mongo"
+	middleware "github.com/gbubemi22/golang-football-api/middleware"
 )
 
 var leagueCollection *mongo.Collection = database.OpenCollection(database.Client, "league")
@@ -21,7 +22,8 @@ func main() {
 
 	router := gin.New()
 	router.Use(gin.Logger())
-	//routes.UserRoutes(router)
+	routes.UserRoutes(router)
+	router.Use(middleware.Authentication())
 
 	routes.LeagueRoutes(router)
 	routes.TeamRoutes(router)
